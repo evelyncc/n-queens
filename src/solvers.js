@@ -11,7 +11,8 @@
 // take a look at solversSpec.js to see what the tests are expecting
 
 
-// return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
+// return a matrix (an array of arrays) representing a single nxn chessboard, 
+// with n rooks placed such that none of them can attack each other
 
 
 
@@ -24,8 +25,18 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
-
+  var solutionCount; //fixme
+  
+  var recurse = function(num) {
+    if (num === 0) {
+      return 1;
+    } else {
+      return num * num * recurse(num - 1)
+    }
+  }
+  
+  solutionCount = Math.sqrt(recurse(n));
+  
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
