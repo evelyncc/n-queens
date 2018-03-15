@@ -79,14 +79,35 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      var hasOne = false;
+      for (var index = 0; index < this.attributes.n; index++) {
+        if (this.get(rowIndex)[index] === 1) {
+          if (!hasOne) {
+            hasOne = true;
+          } else {
+            return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
-    hasAnyRowConflicts: function() {
+    hasAnyRowConflicts: function() {      
+      for (var row = 0; row < this.attributes.n; row++) {
+        var hasOne = false;
+        for (var index = 0; index < this.attributes.n; index++) {
+          if (this.get(row)[index] === 1) {
+            if (!hasOne) {
+              hasOne = true;
+            } else {
+              return true;
+            }            
+          }
+        }
+      }
       return false; // fixme
     },
-
 
 
     // COLUMNS - run from top to bottom
@@ -94,11 +115,33 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var hasOne = false;
+      for (var row = 0; row < this.attributes.n; row++) {
+        if (this.attributes[row][colIndex] === 1) {
+          if (!hasOne) {
+            hasOne = true;
+            } else {
+              return true;
+          }
+        }
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      for (var column = 0; column < this.attributes.n; column++) {
+        var hasOne = false;
+        for (var row = 0; row < this.attributes.n; row++) {
+          if (this.attributes[row][column] === 1) {
+            if (!hasOne) {
+              hasOne = true;
+            } else {
+              return true;
+            }            
+          }
+        }
+      }
       return false; // fixme
     },
 
@@ -109,11 +152,35 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var hasOne = false;
+      for (var col = 0; col < this.attributes.n; col++) {
+        var row = col - majorDiagonalColumnIndexAtFirstRow;
+        if (this._isInBounds(row, col) && this.attributes[row][col] === 1) {
+          if (!hasOne) {
+            hasOne = true;
+          } else {
+            return true;
+          } 
+        } 
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      for (var diag = -this.attributes.n + 1; diag < this.attributes.n + 1; diag++) {
+        var hasOne = false;
+        for (var col = 0; col < this.attributes.n; col++) {
+          var row = col - diag;
+          if (this._isInBounds(row, col) && this.attributes[row][col] === 1) {
+            if (!hasOne) {
+              hasOne = true;
+            } else {
+              return true;
+            } 
+          } 
+        }
+      }
       return false; // fixme
     },
 
@@ -124,11 +191,35 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var hasOne = false;
+      for (var col = this.attributes.n; col >= 0 ; col--) {
+        var row = minorDiagonalColumnIndexAtFirstRow - col;
+        if (this._isInBounds(row, col) && this.attributes[row][col] === 1) {
+          if (!hasOne) {
+            hasOne = true;
+          } else {
+            return true;
+          } 
+        } 
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (var diag = 2 * this.attributes.n - 1; diag >= 0; diag--) {
+        var hasOne = false;
+        for (var col = this.attributes.n; col >= 0 ; col--) {
+          var row = diag - col;
+          if (this._isInBounds(row, col) && this.attributes[row][col] === 1) {
+            if (!hasOne) {
+              hasOne = true;
+            } else {
+              return true;
+            } 
+          }   
+        }
+      }
       return false; // fixme
     }
 
